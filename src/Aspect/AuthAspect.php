@@ -16,22 +16,18 @@ use Hyperf\Di\Aop\AbstractAspect;
 use Hyperf\Di\Aop\ProceedingJoinPoint;
 use HyperfExtension\Auth\Annotations\Auth;
 use HyperfExtension\Auth\Contracts\AuthenticatableInterface;
+use HyperfExtension\Auth\Contracts\AuthManagerInterface;
 use HyperfExtension\Auth\Exceptions\AuthenticationException;
 
-/**
- * @Aspect
- */
+#[Aspect]
 class AuthAspect extends AbstractAspect
 {
     public array $annotations = [
         Auth::class,
     ];
 
-    /**
-     * @Inject
-     * @var \HyperfExtension\Auth\Contracts\AuthManagerInterface
-     */
-    protected $auth;
+    #[Inject]
+    protected AuthManagerInterface $auth;
 
     public function process(ProceedingJoinPoint $proceedingJoinPoint)
     {
@@ -39,7 +35,7 @@ class AuthAspect extends AbstractAspect
 
         $authAnnotation = $annotation->class[Auth::class] ?? $annotation->method[Auth::class];
 
-        $guards = empty($authAnnotation->guards) ? [null] : $authAnnotation->guards;
+        $guards = empty($authAnnotation->guards) ? [null] : (array) $authAnnotation->guards;
         $passable = $authAnnotation->passable;
 
         foreach ($guards as $name) {

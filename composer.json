@@ -1,5 +1,5 @@
 {
-    "name": "hyperf-extension/auth",
+    "name": "menumbing/auth",
     "type": "library",
     "license": "MIT",
     "keywords": [
@@ -24,6 +24,10 @@
         {
             "name": "Gently",
             "email": "xiangjihan@gmail.com"
+        },
+        {
+            "name": "Iqbal Maulana",
+            "email": "iq.bluejack@gmail.com"
         }
     ],
     "autoload": {
@@ -37,19 +41,19 @@
         }
     },
     "require": {
-        "php": ">=8.0",
-        "hyperf-extension/hashing": "^3.0.0",
-        "hyperf/command": "^3.0.0",
-        "hyperf/config": "^3.0.0",
-        "hyperf/database": "^3.0.0",
-        "hyperf/db-connection": "^3.0.0",
-        "hyperf/di": "^3.0.0",
-        "hyperf/framework": "^3.0.0",
-		"hyperf/macroable": "^3.0.0"
+        "php": ">=8.1",
+        "hyperf-extension/hashing": "^3.1",
+        "hyperf/command": "^3.1",
+        "hyperf/config": "^3.1",
+        "hyperf/database": "^3.1",
+        "hyperf/db-connection": "^3.1",
+        "hyperf/di": "^3.1",
+        "hyperf/framework": "^3.1",
+        "hyperf/macroable": "^3.1"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.0",
-        "hyperf/testing": "^3.0.0",
+        "hyperf/testing": "^3.1",
         "phpstan/phpstan": "^0.12",
         "swoole/ide-helper": "dev-master",
         "mockery/mockery": "^1.0"
@@ -68,6 +72,9 @@
         "cs-fix": "php-cs-fixer fix $1"
     },
     "extra": {
+        "branch-alias": {
+            "dev-main": "1.0-dev"
+        },
         "hyperf": {
             "config": "HyperfExtension\\Auth\\ConfigProvider"
         }
