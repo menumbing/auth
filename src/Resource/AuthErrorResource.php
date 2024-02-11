@@ -6,6 +6,7 @@ namespace HyperfExtension\Auth\Resource;
 
 use Hyperf\Resource\Json\JsonResource;
 use HyperfExtension\Auth\Exceptions\AuthorizationException;
+use Psr\Http\Message\ResponseInterface;
 use ReflectionObject;
 use Throwable;
 
@@ -26,6 +27,19 @@ class AuthErrorResource extends JsonResource
             'message' => $this->resource->getMessage(),
             'type'    => $this->getType($this->resource),
         ];
+    }
+
+    public function getStatusCode(): int
+    {
+        if ($this->resource instanceof Throwable) {
+            return $this->getCode($this->resource);
+        }
+
+        if ($this->resource instanceof ResponseInterface) {
+            return $this->resource->getStatusCode();
+        }
+
+        return parent::getStatusCode();
     }
 
     protected function getType(Throwable $throwable): string
