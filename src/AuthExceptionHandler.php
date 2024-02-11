@@ -12,6 +12,8 @@ use HyperfExtension\Auth\Exceptions\AuthenticationException;
 use HyperfExtension\Auth\Exceptions\AuthorizationException;
 use HyperfExtension\Auth\Resource\AuthErrorResource;
 use Menumbing\Resource\Contract\ResourceStrategyInterface;
+use Menumbing\Resource\Trait\MergeResponse;
+use Psr\Http\Message\ResponseInterface;
 use Swow\Psr7\Message\ResponsePlusInterface;
 use Throwable;
 
@@ -20,6 +22,8 @@ use Throwable;
  */
 class AuthExceptionHandler extends ExceptionHandler
 {
+    use MergeResponse;
+
     #[Inject]
     protected RequestInterface $request;
 
@@ -28,10 +32,16 @@ class AuthExceptionHandler extends ExceptionHandler
 
     public function handle(Throwable $throwable, ResponsePlusInterface $response)
     {
-        $this->stopPropagation();
-
         if ($this->resource->supports($throwable)) {
-            return $this->resource->render(new AuthErrorResource($throwable));
+            $this->stopPropagation();
+
+            $resource = $this->resource->render(new AuthErrorResource($throwable));
+
+            if ($resource instanceof ResponseInterface) {
+                $resource = $this->mergeAll($response, $resource);
+            }
+
+            return $resource;
         }
 
         return $response
