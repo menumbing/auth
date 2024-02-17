@@ -93,7 +93,7 @@ class TokenGuard implements GuardInterface
     /**
      * Get the token for the current request.
      */
-    public function getTokenForRequest(): string
+    public function getTokenForRequest(): ?string
     {
         $token = $this->request->query($this->inputKey);
 
@@ -164,7 +164,7 @@ class TokenGuard implements GuardInterface
     {
         $header = $this->request->header('Authorization');
 
-        if (Str::startsWith($header, 'Basic ')) {
+        if ($header && Str::startsWith($header, 'Basic ')) {
             try {
                 return explode(':', base64_decode(Str::substr($header, 6)));
             } catch (\Throwable $throwable) {
