@@ -17,7 +17,6 @@ use HyperfExtension\Auth\Commands\GenAuthPolicyCommand;
 use HyperfExtension\Auth\Contracts\Access\GateManagerInterface;
 use HyperfExtension\Auth\Contracts\AuthManagerInterface;
 use HyperfExtension\Auth\Contracts\PasswordBrokerManagerInterface;
-use HyperfExtension\Auth\Listener\RegisterAuthUserListener;
 use HyperfExtension\Auth\Passwords\PasswordBrokerManager;
 
 class ConfigProvider
