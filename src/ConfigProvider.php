@@ -11,10 +11,13 @@ declare(strict_types=1);
 namespace HyperfExtension\Auth;
 
 use HyperfExtension\Auth\Access\GateManager;
+use HyperfExtension\Auth\Aspect\AuthAspect;
+use HyperfExtension\Auth\Aspect\AuthUserAspect;
 use HyperfExtension\Auth\Commands\GenAuthPolicyCommand;
 use HyperfExtension\Auth\Contracts\Access\GateManagerInterface;
 use HyperfExtension\Auth\Contracts\AuthManagerInterface;
 use HyperfExtension\Auth\Contracts\PasswordBrokerManagerInterface;
+use HyperfExtension\Auth\Listener\RegisterAuthUserListener;
 use HyperfExtension\Auth\Passwords\PasswordBrokerManager;
 
 class ConfigProvider
@@ -26,6 +29,10 @@ class ConfigProvider
                 AuthManagerInterface::class => AuthManager::class,
                 GateManagerInterface::class => GateManager::class,
                 PasswordBrokerManagerInterface::class => PasswordBrokerManager::class,
+            ],
+            'aspects' => [
+                AuthAspect::class,
+                AuthUserAspect::class,
             ],
             'annotations' => [
                 'scan' => [

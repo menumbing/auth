@@ -10,7 +10,6 @@ declare(strict_types=1);
  */
 namespace HyperfExtension\Auth\Aspect;
 
-use Hyperf\Di\Annotation\Aspect;
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\Di\Aop\AbstractAspect;
 use Hyperf\Di\Aop\ProceedingJoinPoint;
@@ -19,7 +18,6 @@ use HyperfExtension\Auth\Contracts\AuthenticatableInterface;
 use HyperfExtension\Auth\Contracts\AuthManagerInterface;
 use HyperfExtension\Auth\Exceptions\AuthenticationException;
 
-#[Aspect]
 class AuthAspect extends AbstractAspect
 {
     public array $annotations = [
