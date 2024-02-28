@@ -18,6 +18,7 @@ use HyperfExtension\Auth\Contracts\AuthManagerInterface;
 use HyperfExtension\Auth\Events\GateManagerResolved;
 use Psr\Container\ContainerInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
+use HyperfExtension\Auth\Annotations\Gate as GateAnnotation;
 
 use function Hyperf\Support\call;
 use function Hyperf\Support\make;
@@ -92,6 +93,7 @@ class GateManager implements GateManagerInterface
         }]);
         $this->registerPoliciesByConfig();
         $this->registerPoliciesByAnnotation();
+        $this->registerGateByAnnotation();
         $this->eventDispatcher->dispatch(new GateManagerResolved($this));
     }
 
@@ -123,9 +125,22 @@ class GateManager implements GateManagerInterface
     {
         $policies = AnnotationCollector::getClassesByAnnotation(Policy::class);
         foreach ($policies as $policy => $annotation) {
-            foreach ($annotation->models as $model) {
+            foreach ((array) $annotation->models as $model) {
                 $this->gate->policy($model, $policy);
             }
+        }
+    }
+
+    protected function registerGateByAnnotation(): void
+    {
+        $gates = AnnotationCollector::getMethodsByAnnotation(GateAnnotation::class);
+
+        foreach ($gates as $metadata) {
+            /** @var GateAnnotation $annotation */
+            $annotation = $metadata['annotation'];
+            $controller = $this->container->get($metadata['class']);
+
+            $this->gate->define($annotation->ability, [$controller, $metadata['method']]);
         }
     }
 }

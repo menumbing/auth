@@ -16,7 +16,7 @@ use Hyperf\Di\Annotation\AbstractAnnotation;
 #[Attribute(Attribute::TARGET_CLASS)]
 class Policy extends AbstractAnnotation
 {
-    public function __construct(public array $models = [])
+    public function __construct(public array|string $models = [])
     {
     }
 }
