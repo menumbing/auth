@@ -100,7 +100,9 @@ abstract class AbstractAuthenticateMiddleware implements MiddlewareInterface
     /**
      * Get guard names.
      *
+     * @param ServerRequestInterface $request
+     *
      * @return string[]
      */
-    abstract protected function guards(): array;
+    abstract protected function guards(ServerRequestInterface $request): array;
 }
