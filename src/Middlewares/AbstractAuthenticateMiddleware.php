@@ -40,7 +40,8 @@ abstract class AbstractAuthenticateMiddleware implements MiddlewareInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $this->authenticate($request, $this->guards());
+        $this->authenticate($request, $this->guards($request));
+
         return $handler->handle($request);
     }
 
